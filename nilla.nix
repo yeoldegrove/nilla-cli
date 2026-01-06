@@ -1,5 +1,7 @@
 let
-  pins = import ./npins;
+  # npins v7+ wraps the result in mkFunctor (adds __functor), making it callable.
+  # We need to call it with { } to unwrap it. npins v6 returns a plain set directly.
+  pins = let p = import ./npins; in if p ? __functor then p { } else p;
 
   nilla = import pins.nilla;
 in
